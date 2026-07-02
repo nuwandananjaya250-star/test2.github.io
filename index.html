@@ -1,1 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemini Minsadi | Cyber Security Portfolio</title>
+    <style>
+        /* Cyber-Ops Terminal Theme Palette */
+        :root {
+            --bg-color: #05070f;
+            --grid-color: rgba(0, 255, 136, 0.02);
+            --card-bg: #0c1020;
+            --accent-primary: #00ff88; /* Matrix Green */
+            --accent-secondary: #8a2be2; /* Cyber Purple */
+            --text-main: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #1e293b;
+            --terminal-header: #131930;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SF Mono', Consolas, 'Fira Code', monospace;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            /* Subtle tech grid background effect */
+            background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(5, 7, 15, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid var(--accent-secondary);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+        }
+
+        nav .logo {
+            display: flex;
+            align-items: center;
+            filter: drop-shadow(0 0 8px var(--accent-primary));
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-primary);
+            text-shadow: 0 0 8px var(--accent-primary);
+        }
+
+        /* Active section indicator line */
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent-primary);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* Section Layouts */
+        section {
+            padding: 8rem 5% 4rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 2.5rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: "*";
+            color: var(--accent-primary);
+            font-size: 1.1rem;
+        }
+
+        /* Hero Section */
+        #hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 95vh;
+            padding-top: 4rem;
+            gap: 3rem;
+        }
+
+        .hero-text {
+            flex: 1.2;
+        }
+
+        .hero-text h2 {
+            font-size: 1.2rem;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-text h1 {
+            font-size: 3.8rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.1;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-weight: 800;
+        }
+
+        .hero-text h1 span {
+            color: transparent;
+            -webkit-text-stroke: 1px var(--text-main);
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .hero-text .role-title {
+            font-size: 1.6rem;
+            color: var(--accent-secondary);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .hero-text p {
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+            max-width: 650px;
+            line-height: 1.8;
+        }
+
+        .hero-image {
+            flex: 0.8;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Hexagonal / Tech Frame for Profile Pic */
+        .profile-container {
+            position: relative;
+            padding: 10px;
+        }
+
+        .profile-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 2px dashed var(--accent-primary);
+            border-radius: 12px;
+            animation: rotateContainer 20s linear infinite;
+        }
+
+        .profile-img {
+            width: 280px;
+            height: 280px;
+            border-radius: 8px;
+            border: 3px solid var(--accent-secondary);
+            object-fit: cover;
+            background: var(--card-bg);
+            display: block;
+        }
+
+        @keyframes rotateContainer {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Action Buttons */
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, rgba(0, 255, 136, 0.1), rgba(138, 43, 226, 0.1));
+            color: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
+            padding: 0.8rem 2rem;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.05);
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            background: var(--accent-primary);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Terminal Window Cards Grid */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top window control bar simulation */
+        .card::before {
+            content: "● ● ●";
+            color: #475569;
+            padding: 0.5rem 1rem;
+            background-color: var(--terminal-header);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            border-bottom: 1px solid var(--border-color);
+            display: block;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.05);
+        }
+
+        .card h3 {
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            font-family: system-ui, sans-serif;
+        }
+
+        .card .subtitle {
+            color: var(--accent-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Tech Badges */
+        .badge-list {
+            margin-top: 1.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(138, 43, 226, 0.15);
+            color: var(--text-main);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card:hover .badge {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        /* Contact Section Matrix Layout */
+        .contact-wrapper {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 2.5rem;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .contact-info p {
+            margin-bottom: 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-info p::before {
+            content: ">";
+            color: var(--accent-primary);
+            font-weight: bold;
+        }
+
+        .contact-info strong {
+            color: var(--text-main);
+            min-width: 90px;
+            display: inline-block;
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .social-links .btn {
+            text-align: center;
+            min-width: 200px;
+        }
+
+        /* Section Divider Line */
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+            margin: 0 5%;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2.5rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            background-color: #03040a;
+            letter-spacing: 1px;
+        }
+
+        /* Mobile Responsive Breakpoints */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 1rem 5%;
+            }
+            
+            nav ul { 
+                margin-top: 1rem;
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 0.5rem 1rem;
+            }
+
+            nav ul li {
+                margin-left: 0;
+            }
+
+            section {
+                padding: 10rem 5% 3rem 5%;
+            }
+
+            #hero { 
+                flex-direction: column-reverse; 
+                text-align: center; 
+                justify-content: center;
+                padding-top: 4rem;
+                gap: 2rem;
+            }
+
+            .hero-text h1 { 
+                font-size: 2.5rem; 
+            }
+
+            .hero-text p {
+                margin-bottom: 1.8rem;
+            }
+
+            .profile-img {
+                width: 200px;
+                height: 200px;
+            }
+
+            .contact-wrapper {
+                padding: 1.5rem;
+            }
+
+            .social-links {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            
+            .social-links .btn {
+                flex: 1;
+                min-width: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="#hero">// Home</a></li>
+            <li><a href="#education">// Education</a></li>
+            <li><a href="#experience">// Experience</a></li>
+            <li><a href="#projects">// Projects</a></li>
+            <li><a href="#achievements">// Achievements</a></li>
+            <li><a href="#contact">// Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="hero">
+        <div class="hero-text">
+            <h1>Chemini <span>Minsadi</span></h1>
+            <div class="role-title">Cyber Security & IT Student</div>
+            <p>
+                I am a highly motivated individual with a strong technical background. 
+                I possess excellent skills in infrastructure troubleshooting, problem-solving, team coordination, 
+                and time management. Driven by analytical thinking, I look forward to contributing effectively 
+                to secure and scale organizational networks.
+            </p>
+        </div>
+        <div class="hero-image">
+            <div class="profile-container">
+                <img src="profile.png" alt="Chemini Minsadi Photo" class="profile-img">
+            </div>
+        </div>
+    </section>
+
+    <hr>
+
+    <section id="education">
+        <h2 class="section-title">Education_Registry</h2>
+        <div class="grid-container">
+            <div class="card">
+                <div class="card-body">
+                    <h3>BSc (Hons) in Cyber Security</h3>
+                    <div class="subtitle">STATUS: In Progress</div>
+                    <p>Developing core skills in networking protocols, professional ethics, security architectures, and secure system implementations.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h3>Cerificate in Information Technology (IT)</h3>
+                    <div class="subtitle">STATUS: Completed</div>
+                    <p>Acquired vital competencies in baseline systems infrastructure, fundamentals of software development, database integrity, and hardware asset structures.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr>
+
+    <section id="experience">
+        <h2 class="section-title">Experience_Log</h2>
+        <div class="grid-container">
+            <div class="card" style="grid-column: 1 / -1;">
+                <div class="card-body">
+                    <h3>Banking Operations Associate / Intern</h3>
+                    <div class="subtitle">TENURE: 6 Months Experience</div>
+                    <p>
+                        Assisted with standard daily administrative transactions and customer information compliance monitoring. Developed core insights into financial transaction security frameworks, data protection baselines, and commercial network terminal operations.
+                    </p>
+                    <div class="badge-list">
+                        <span class="badge">Data Integrity</span>
+                        <span class="badge">Financial Systems</span>
+                        <span class="badge">Compliance Operations</span>
+                        <span class="badge">Enterprise Terminals</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr>
+
+    <section id="projects">
+        <h2 class="section-title">Repository_Projects</h2>
+        <div class="grid-container">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Personal Portfolio Development</h3>
+                    <div class="subtitle">Academic Assignment</div>
+                    <p>Designed and built a responsive personal portfolio using semantic HTML5 and custom CSS layouts to showcase technical qualifications and competencies.</p>
+                    <div class="badge-list">
+                        <span class="badge">HTML5</span>
+                        <span class="badge">CSS3</span>
+                        <span class="badge">Responsive Design</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h3>Network Packet Analyzer & Monitor</h3>
+                    <div class="subtitle">Academic Lab Project</div>
+                    <p>Constructed a basic packet inspection tool framework to parse local network traffic profiles, scanning for anomalous behavior and common network exploits.</p>
+                    <div class="badge-list">
+                        <span class="badge">Networking</span>
+                        <span class="badge">Wireshark</span>
+                        <span class="badge">Traffic Analysis</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr>
+
+    <section id="achievements">
+        <h2 class="section-title">Milestones_&_Activities</h2>
+        <div class="grid-container">
+            <div class="card" style="grid-column: 1 / -1;">
+                <div class="card-body">
+                    <h3>Academic & Professional Growth Focus</h3>
+                    <div class="subtitle">Continuous Professional Development</div>
+                    <p>Consistently matching theoretical assignments under the CCS1310 curriculum with production infrastructure environments to optimize structural workflow security.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr>
+
+    <section id="contact">
+        <h2 class="section-title">Establish_Connection</h2>
+        <div class="contact-wrapper">
+            <div class="contact-info">
+                <p><strong>Email:</strong> nimisandisemini@gmail.com</p>
+                <p><strong>Phone:</strong> +94 77 560 8960</p>
+                <p><strong>Address:</strong> 303/6, Katuwana Road, Homagama</p>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/nuwandananjaya250-star" target="_blank" class="btn">GitHub_Profile</a>
+                <a href="https://www.linkedin.com/in/nuwan-dananjaya-317273224" target="_blank" class="btn">LinkedIn_Profile</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p><b>[SECURE CONNECTION] &copy; 2026 Chemini Minsadi. All Rights Reserved.</b></p>
+    </footer>
+
+</body>
+</html>
